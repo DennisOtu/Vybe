@@ -38,7 +38,7 @@ export default class CreateRoomPage extends Component {
   }
 
   handleRoomButtonPress() {
-    const requestOptions = {
+    const requestOptions =  {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -47,9 +47,11 @@ export default class CreateRoomPage extends Component {
       }),
     };
     fetch("/api/create-room", requestOptions)
-      .then((response) => response.json())
-      .then((data) => console.log(data));
+    .then((response) =>  response.json())
+    .then((data) => this.props.history.push("/room/" + data.code));    
+
   }
+
 
   render() {
     return (
@@ -64,11 +66,7 @@ export default class CreateRoomPage extends Component {
             <FormHelperText>
               <div align="center">Guest Control of Playback State</div>
             </FormHelperText>
-            <RadioGroup
-              row
-              defaultValue="true"
-              onChange={this.handleGuestCanPauseChange}
-            >
+            <RadioGroup row defaultValue="true" onChange={this.handleGuestCanPauseChange}>
               <FormControlLabel
                 value="true"
                 control={<Radio color="primary" />}
@@ -119,3 +117,4 @@ export default class CreateRoomPage extends Component {
     );
   }
 }
+
