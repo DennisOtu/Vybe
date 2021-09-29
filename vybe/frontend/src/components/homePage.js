@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import JoinRoomPage from "./joinRoomPage";
 import CreateRoomPage from "./createRoomPage";
-import Room from "./roomPage"
+import RoomPage from "./roomPage"
 import {
   BrowserRouter as Router,
   Switch,
@@ -17,7 +17,8 @@ export default class HomePage extends Component {
     this.state = {
       roomCode: null,
     };
-  
+    this.clearRoomCode = this.clearRoomCode.bind(this);
+
   }
 
   async componentDidMount() {
@@ -35,7 +36,7 @@ export default class HomePage extends Component {
       <Grid container spacing={3}>
         <Grid item xs={12} align="center">
           <Typography variant="h3" compact="h3">
-            House Party
+            Home Page
           </Typography>
         </Grid>
         <Grid item xs={12} align="center">
@@ -52,6 +53,12 @@ export default class HomePage extends Component {
     );
   }
 
+  clearRoomCode() {
+    this.setState({
+      roomCode: null,
+    });
+  }
+
 
   render() {
     return (
@@ -66,7 +73,12 @@ export default class HomePage extends Component {
           />
           <Route path ="/create" component={CreateRoomPage} />
           <Route path="/join" component={JoinRoomPage} />
-          <Route path="/room/:roomCode" component={Room} />
+          <Route
+            path="/room/:roomCode"
+            render={(props) => {
+              return <RoomPage {...props} leaveRoomCallback={this.clearRoomCode} />;
+            }}
+          />        
         </Switch>
       </Router>
     );
